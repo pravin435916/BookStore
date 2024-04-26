@@ -10,29 +10,41 @@ const CreateBooks = () => {
   const [author, setAuthor] = useState('');
   const [publishYear, setPublishYear] = useState('');
   const [loading, setLoading] = useState(false);
+  const [coverPhoto, setCoverPhoto] = useState(null); // State for cover photo file
   const navigate = useNavigate();
   const { enqueueSnackbar } = useSnackbar();
 
-  const handleSaveBook = () => {
-    const data = {
-      title,
-      author,
-      publishYear,
-    };
+  const handleSaveBook = async () => {
+    const formData = new FormData(); // Create a FormData object for file upload
+    formData.append('title', title);
+    formData.append('author', author);
+    formData.append('publishYear', publishYear);
+
+    if (coverPhoto) { // Check if a cover photo is selected
+      formData.append('coverPhoto', coverPhoto, coverPhoto.name); // Append cover photo to FormData
+    }
+
     setLoading(true);
-    axios
-      .post('http://localhost:5555/books', data)
-      .then(() => {
-        setLoading(false);
-        enqueueSnackbar('Book Created successfully', { variant: 'success' });
-        navigate('/');
-      })
-      .catch((error) => {
-        setLoading(false);
-        // alert('An error happened. Please Chack console');
-        enqueueSnackbar('Error', { variant: 'error' });
-        console.log(error);
+
+    try {
+      const response = await axios.post('http://localhost:5555/books', formData, {
+        headers: {
+          'Content-Type': 'multipart/form-data', // Set content type for file upload
+        },
       });
+
+      setLoading(false);
+      enqueueSnackbar('Book Created successfully', { variant: 'success' });
+      navigate('/');
+    } catch (error) {
+      setLoading(false);
+      enqueueSnackbar('Error creating book', { variant: 'error' });
+      console.error(error);
+    }
+  };
+
+  const handleCoverPhotoChange = (event) => {
+    setCoverPhoto(event.target.files[0]);
   };
 
   return (
@@ -56,7 +68,7 @@ const CreateBooks = () => {
             type='text'
             value={author}
             onChange={(e) => setAuthor(e.target.value)}
-            className='border-2 border-gray-500 px-4 py-2  w-full '
+            className='border-2 border-gray-500 px-4 py-2  w-full '
           />
         </div>
         <div className='my-4'>
@@ -65,7 +77,16 @@ const CreateBooks = () => {
             type='number'
             value={publishYear}
             onChange={(e) => setPublishYear(e.target.value)}
-            className='border-2 border-gray-500 px-4 py-2  w-full '
+            className='border-2 border-gray-500 px-4 py-2  w-full '
+          />
+        </div>
+        <div className='my-4'>
+          <label className='text-xl mr-4 text-gray-500'>Cover Photo</label>
+          <input
+            type='file'
+            accept='image/*' // Accept only image files
+            onChange={handleCoverPhotoChange}
+            className='border-2 border-gray-500 px-4 py-2 w-full'
           />
         </div>
         <button className='p-2 bg-sky-300 m-8' onClick={handleSaveBook}>
@@ -74,6 +95,6 @@ const CreateBooks = () => {
       </div>
     </div>
   );
-}
+};
 
-export default CreateBooks
+export default CreateBooks;

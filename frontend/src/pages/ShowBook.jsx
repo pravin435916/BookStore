@@ -22,6 +22,7 @@ const ShowBook = () => {
         setLoading(false);
       });
   }, []);
+  console.log(book) 
 
   return (
     <div className='p-4'>
@@ -55,6 +56,16 @@ const ShowBook = () => {
             <span className='text-xl mr-4 text-gray-500'>Last Update Time</span>
             <span>{new Date(book.updatedAt).toString()}</span>
           </div>
+          {book.coverPhoto && ( // Display image only if coverPhoto exists
+            <div className='my-4'>
+              <span className='text-xl mr-4 text-gray-500'>Cover Photo</span>
+              <img src={book.coverPhoto} alt={book.title} 
+              onError={(event) => {
+                event.target.src = 'https://wallpapercave.com/wp/wp3160509.jpg';
+              }}
+               className='w-32 h-32 object-cover rounded-lg' />
+            </div>
+          )}
         </div>
       )}
     </div>
