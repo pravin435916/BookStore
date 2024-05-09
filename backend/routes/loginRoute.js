@@ -1,5 +1,4 @@
 import express from "express";
-import { Book } from "../models/bookModel.js";
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
 import { User } from "../models/user.model.js";
@@ -26,7 +25,7 @@ router.post("/register", async (req, res) => {
     res.status(500).json({ message: "Internal Server Error" });
   }
 });
-//login
+//loginn
 router.post("/login", async (req, res) => {
   try {
     const { username, password } = req.body;

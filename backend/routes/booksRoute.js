@@ -8,11 +8,6 @@ router.post('/create', async (req, res) => {
     if (!req.body.title || !req.body.author || !req.body.publishYear) {
       return res.status(400).send({ message: 'Send all required fields: title, author, publishYear' });
     }
-
-    // if (req.fileValidationError) {
-    //   return res.status(400).send({ message: req.fileValidationError });
-    // }
-
     const newBook = {
       title: req.body.title,
       author: req.body.author,
