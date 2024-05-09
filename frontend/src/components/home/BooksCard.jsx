@@ -9,7 +9,7 @@ import BookSingleCard from './BookSingleCard';
 
 const BooksCard = ({ books }) => {
   return (
-    <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-4 justify-items-center">
+    <div className="flex items-center justify-between gap-10 p-10">
       {books.map((item) => (
         <BookSingleCard key={item._id} book={item} />
       ))}

@@ -1,29 +1,23 @@
 import express from 'express';
 import { Book } from '../models/bookModel.js';
-import multer from 'multer';
 
 const router = express.Router();
-const upload = multer({ dest: 'uploads/' });
 
-router.post('/create', upload.single('coverPhoto'), async (req, res) => {
+router.post('/create', async (req, res) => {
   try {
     if (!req.body.title || !req.body.author || !req.body.publishYear) {
       return res.status(400).send({ message: 'Send all required fields: title, author, publishYear' });
     }
 
-    if (req.fileValidationError) {
-      return res.status(400).send({ message: req.fileValidationError });
-    }
+    // if (req.fileValidationError) {
+    //   return res.status(400).send({ message: req.fileValidationError });
+    // }
 
     const newBook = {
       title: req.body.title,
       author: req.body.author,
       publishYear: req.body.publishYear,
     };
-
-    if (req.file) {
-      newBook.coverPhoto = req.file.path;
-    }
 
     const book = await Book.create(newBook);
     console.log(book);

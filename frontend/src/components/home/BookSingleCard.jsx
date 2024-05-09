@@ -5,43 +5,31 @@ import { AiOutlineEdit } from 'react-icons/ai';
 import { BsInfoCircle } from 'react-icons/bs';
 import { MdOutlineDelete } from 'react-icons/md';
 import { useState } from 'react';
-import BookModal from './BookModal';
 
 const BookSingleCard = ({ book }) => {
   const [showModal, setShowModal] = useState(false);
-  
+
   return (
-    <div className='border-2 border-gray-500 rounded-lg px-4 py-2 m-4 relative hover:shadow-xl'>
-      <h2 className='absolute top-1 right-2 px-4 py-1 bg-red-300 rounded-lg'>
-        {book.publishYear}
-      </h2>
-      <h4 className='my-2 text-gray-500'>{book._id}</h4>
-      <div className='flex justify-start items-center gap-x-2'>
-        <PiBookOpenTextLight className='text-red-300 text-2xl' />
-        <h2 className='my-1'>{book.title}</h2>
+    <div className='w-72 h-52 p-8 rounded-lg shadow-xl bg-white overflow-hidden'>
+      <div className='flex flex-col gap-2'>
+        <span className='text-gray-400'>{book.publishYear}</span>
+        <span className='font-bold '>{book.author}</span>
       </div>
-      <div className='flex justify-start items-center gap-x-2'>
-        <BiUserCircle className='text-red-300 text-2xl' />
-        <h2 className='my-1'>{book.author}</h2>
-      </div>
-      <div className='flex justify-between items-center gap-x-2 mt-4 p-4'>
+      <div className='w-full flex justify-between items-center gap-x-2  p-2'>
         <BiShow
-          className='text-3xl text-blue-800 hover:text-black cursor-pointer'
+          className='text-3xl  cursor-pointer'
           onClick={() => setShowModal(true)}
         />
         <Link to={`/books/details/${book._id}`}>
-          <BsInfoCircle className='text-2xl text-green-800 hover:text-black' />
+          <BsInfoCircle className='text-2xl' />
         </Link>
         <Link to={`/books/edit/${book._id}`}>
-          <AiOutlineEdit className='text-2xl text-yellow-600 hover:text-black' />
+          <AiOutlineEdit className='text-2xl' />
         </Link>
         <Link to={`/books/delete/${book._id}`}>
-          <MdOutlineDelete className='text-2xl text-red-600 hover:text-black' />
+          <MdOutlineDelete className='text-2xl' />
         </Link>
       </div>
-      {showModal && (
-        <BookModal book={book} onClose={() => setShowModal(false)} />
-      )}
     </div>
   );
 };

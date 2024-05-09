@@ -5,6 +5,7 @@ import { Link } from 'react-router-dom';
 import { MdOutlineAddBox, MdOutlineDelete } from 'react-icons/md';
 import BooksTable from '../components/home/BooksTable';
 import BooksCard from '../components/home/BooksCard';
+import Table from './Table';
 
 const Home = () => {
   const [books, setBooks] = useState([]);
@@ -26,37 +27,8 @@ const Home = () => {
 
   return (
     <div className="p-4">
-      <div className="flex justify-center items-center gap-x-4">
-        <button
-          className={`btn-switch ${
-            showType === 'table' ? 'active' : ''
-          }`}
-          onClick={() => setShowType('table')}
-        >
-          Table View
-        </button>
-        <button
-          className={`btn-switch ${
-            showType === 'card' ? 'active' : ''
-          }`}
-          onClick={() => setShowType('card')}
-        >
-          Card View
-        </button>
-      </div>
-      <div className="flex justify-between items-center mt-8">
-        <h1 className="text-3xl">Books List</h1>
-        <Link to="/books/create">
-          <MdOutlineAddBox className="text-sky-800 text-4xl" />
-        </Link>
-      </div>
-      {loading ? (
-        <Spinner />
-      ) : showType === 'table' ? (
-        <BooksTable books={books} />
-      ) : (
-        <BooksCard books={books} />
-      )}
+      <Table />
+      {/* <BooksCard books={books}/> */}
     </div>
   );
 };

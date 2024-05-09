@@ -4,12 +4,11 @@ function Navbar() {
   return (
     <>
       <div className='w-full h-20 flex justify-between items-center bg-gray-900 px-4 text-white font-semibold text-lg'>
-         <span>LOGO</span>
+         <span>BOOKIE</span>
          <div className='flex gap-8 items-center'>
-            <Link to='/'>Books</Link>
+            <Link to='/books'>Books</Link>
             <Link to='/books/create'>Add Book</Link>
-            <Link to='/'>Users</Link>
-            <Link to='/'>Signup</Link>
+            <Link to='/register'>Signup</Link>
          </div>
       </div>
     </>
